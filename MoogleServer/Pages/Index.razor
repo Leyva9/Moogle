@@ -1,0 +1,40 @@
+﻿@page "/"
+@inject IJSRuntime JSRuntime
+<PageTitle>Moogle!</PageTitle>
+
+<h1 class="title">🔍 Moogle!</h1>
+
+<input class="p-1 my-4" @bind="query" placeholder="Introduzca su búsqueda">
+
+<button type="default" class="btn btn-primary" @onclick="RunQuery">🔍 Buscar</button>
+
+@if (!string.IsNullOrEmpty(result.Suggestion)) {
+    <div class="suggestion">
+        <p>¿Quisite decir <strong><a href="#">@result.Suggestion</a></strong>?</p>
+    </div>
+}
+
+<ul class="results">
+@foreach (var item in result.Items()) {
+    <li>
+        <div class="item">
+                <p class="title"><a href="@item.FilePath" target="_blank">@item.Title</a></p>
+            <p>... @item.Snippet ...</p>
+        </div>
+    </li>
+}
+</ul>
+
+@code {
+    private string query = "";
+    private SearchResult result = new SearchResult();
+
+    private void RunQuery() {
+        if(String.IsNullOrEmpty(query))
+        {
+            JSRuntime.InvokeVoidAsync("alert", "Por favor introduzca algún término!");
+            return;
+        }
+        result = Moogle.Query(query);
+    }
+}
