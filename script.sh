@@ -55,7 +55,7 @@ showReport()
     cd Informe
     if [ -f "$PDF_FILE_REPORT" ]; then
         # El archivo existe, así que podemos abrirlo
-        xdg-open report.pdf 
+        evince $TEX_FILE_REPORT.pdf 
     else
         echo "El archivo $PDF_FILE_REPORT no se encuentra. Pasaremos a generarlo..."
         report
@@ -69,7 +69,7 @@ showSlides()
     cd Informe
     if [ -f "$PDF_FILE_SLIDES" ]; then
         # El archivo existe, así que podemos abrirlo
-        xdg-open slides.pdf 
+        evince $TEX_FILE_SLIDES.pdf 
     else
         echo "El archivo $PDF_FILE_SLIDES no se encuentra. Pasaremos a generarlo..."
         slides
@@ -81,7 +81,11 @@ showSlides()
 clean()
 {
     echo "Saliendo..."
-    
+    cd Informe
+    rm $PDF_FILE_REPORT
+    rm $PDF_FILE_SLIDES
+    echo "Archivos Innecesarios borrados"
+    cd ..
 }
 
 while true
