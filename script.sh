@@ -82,9 +82,13 @@ clean()
 {
     echo "Saliendo..."
     cd Informe
-    rm $PDF_FILE_REPORT
-    rm $PDF_FILE_SLIDES
-    echo "Archivos Innecesarios borrados"
+    extensiones_mantener=("tex" "jpg" "png")
+
+    # Recorre el directorio y elimina los archivos que NO tienen las extensiones especificadas
+    find -type f ! \( -name "*.${extensiones_mantener[0]}" \
+                              -o -name "*.${extensiones_mantener[1]}" \
+                              -o -name "*.${extensiones_mantener[2]}" \) -delete
+    echo "Se han eliminado todos los archivos no deseados."
     cd ..
 }
 
